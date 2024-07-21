@@ -1,5 +1,6 @@
 package space.peetseater;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -31,15 +32,17 @@ public class Main {
     public static void main(String[] args) throws IOException {
         for (int i = 0; i < args.length; i++) {
             String filename = args[i];
-            Path originalFile = Paths.get(filename);
-            if (originalFile.toFile().exists()) {
-                if (originalFile.toFile().isDirectory()) {
-                    Files.walkFileTree(originalFile, new FileRenameVisitor());
-                } else {
-                    fixFile(originalFile);
-                }
-            } else {
+            Path originalPath = Paths.get(filename);
+            File originalFile = originalPath.toFile();
+            if (!originalFile.exists()) {
                 System.out.printf("File does not exist: %s%n", filename);
+                continue;
+            }
+
+            if (originalPath.toFile().isDirectory()) {
+                Files.walkFileTree(originalPath, new FileRenameVisitor());
+            } else {
+                fixFile(originalPath);
             }
         }
     }
