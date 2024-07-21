@@ -30,8 +30,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        for (int i = 0; i < args.length; i++) {
-            String filename = args[i];
+        for (String filename : args) {
             Path originalPath = Paths.get(filename);
             File originalFile = originalPath.toFile();
             if (!originalFile.exists()) {
