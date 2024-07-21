@@ -1,4 +1,4 @@
-package space.peetseater;
+package space.peetseater.rename;
 
 import java.io.File;
 import java.io.IOException;
