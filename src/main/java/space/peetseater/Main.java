@@ -1,5 +1,6 @@
 package space.peetseater;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,6 +18,17 @@ public class Main {
             Files.move(path, newPath, StandardCopyOption.REPLACE_EXISTING);
         }
     }
+
+    static class FileRenameVisitor extends SimpleFileVisitor<Path> {
+        @Override
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+            if (attrs.isRegularFile()) {
+                fixFile(file);
+            };
+            return FileVisitResult.CONTINUE;
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         for (int i = 0; i < args.length; i++) {
             String filename = args[i];
