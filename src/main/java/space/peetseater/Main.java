@@ -1,6 +1,5 @@
 package space.peetseater;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -35,15 +34,7 @@ public class Main {
             Path originalFile = Paths.get(filename);
             if (originalFile.toFile().exists()) {
                 if (originalFile.toFile().isDirectory()) {
-                    Files.walkFileTree(originalFile, new SimpleFileVisitor<Path>() {
-                        @Override
-                        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                            if (attrs.isRegularFile()) {
-                                fixFile(file);
-                            };
-                            return FileVisitResult.CONTINUE;
-                        }
-                    });
+                    Files.walkFileTree(originalFile, new FileRenameVisitor());
                 } else {
                     fixFile(originalFile);
                 }
