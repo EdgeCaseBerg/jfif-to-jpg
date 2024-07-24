@@ -1,13 +1,15 @@
 package space.peetseater.rename;
 
 import java.util.Optional;
+import java.util.logging.Level;
 
 public class Input {
-    private static final String IN_FLAG  = "--in";
-    private static final String OUT_FLAG = "--out";
-    private static final String RECURSE_FLAG = "--recursive";
-    private static final String PATH_FLAG = "--path";
-    private static final String HELP_FLAG = "--help";
+    public static final String IN_FLAG      = "--in";
+    public static final String OUT_FLAG     = "--out";
+    public static final String RECURSE_FLAG = "--recursive";
+    public static final String PATH_FLAG    = "--path";
+    public static final String HELP_FLAG    = "--help";
+    public static final String VERBOSE_FLAG = "--verbose";
     private static final String HELP_TEXT = helpText();
 
     static Optional<String> getInExtension(String[] args) {
@@ -77,6 +79,15 @@ public class Input {
         return Optional.empty();
     }
 
+    public static Optional<Level> getLogLevel(String[] args) {
+        for (String arg : args) {
+            if (VERBOSE_FLAG.equals(arg.trim())) {
+                return Optional.of(Level.FINE);
+            }
+        }
+        return Optional.empty();
+    }
+
     public static Optional<String> getHelp(String[] args) {
         for (String arg : args) {
             if (HELP_FLAG.equals(arg.trim())) {
@@ -85,7 +96,6 @@ public class Input {
         }
         return Optional.empty();
     }
-
 
     private static String helpText() {
         StringBuilder stringBuilder = new StringBuilder();
