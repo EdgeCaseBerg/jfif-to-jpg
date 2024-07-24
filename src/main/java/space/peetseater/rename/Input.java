@@ -7,6 +7,8 @@ public class Input {
     private static final String OUT_FLAG = "--out";
     private static final String RECURSE_FLAG = "--recursive";
     private static final String PATH_FLAG = "--path";
+    private static final String HELP_FLAG = "--help";
+    private static final String HELP_TEXT = helpText();
 
     static Optional<String> getInExtension(String[] args) {
         return flagFromArgs(args, IN_FLAG);
@@ -75,4 +77,41 @@ public class Input {
         return Optional.empty();
     }
 
+    public static Optional<String> getHelp(String[] args) {
+        for (String arg : args) {
+            if (HELP_FLAG.equals(arg.trim())) {
+                return Optional.of(HELP_TEXT);
+            }
+        }
+        return Optional.empty();
+    }
+
+
+    private static String helpText() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Bulk Extension Change Tool").append(System.lineSeparator());
+        stringBuilder.append(System.lineSeparator());
+        String[][] directions = new String[][]{
+            {IN_FLAG, "extension to change, without the dot. Defaults to jfif"},
+            {OUT_FLAG, "extension the changed files will have after processing, without the dot. Defaults to jpg"},
+            {RECURSE_FLAG, "whether or not all files in the given path should be modified, false by default"},
+            {PATH_FLAG, "A path to a directory or single file, if directory then all files in subdirectories will be walked if the recursive flag is passed"},
+            {HELP_FLAG, "display this help text"}
+        };
+        for (String[] direction : directions) {
+            stringBuilder.append("%-15s%s%s".formatted(direction[0], direction[1], System.lineSeparator()));
+        }
+        stringBuilder.append(System.lineSeparator());
+        stringBuilder.append("Change a single file from txt to markdown").append(System.lineSeparator());
+        stringBuilder.append("\textbulkrename %s txt %s md %s path\\tofile.txt".formatted(IN_FLAG, OUT_FLAG, PATH_FLAG));
+        stringBuilder.append(System.lineSeparator()).append(System.lineSeparator());
+        stringBuilder.append("Change all files within a folder and its subfolders").append(System.lineSeparator());
+        stringBuilder.append("\textbulkrename %s txt %s md %s path\\todirectory %s true".formatted(IN_FLAG, OUT_FLAG, PATH_FLAG, RECURSE_FLAG));
+        stringBuilder.append(System.lineSeparator()).append(System.lineSeparator());
+        stringBuilder.append("Change all files within a folder without changing files in subfolders").append(System.lineSeparator());
+        stringBuilder.append("\textbulkrename %s jfif %s jpg %s path\\todirectory".formatted(IN_FLAG, OUT_FLAG, PATH_FLAG));
+        stringBuilder.append(System.lineSeparator());
+
+        return stringBuilder.toString();
+    }
 }
