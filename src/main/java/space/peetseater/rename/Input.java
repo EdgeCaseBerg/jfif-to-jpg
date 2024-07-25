@@ -4,13 +4,13 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 public class Input {
-    public static final String IN_FLAG      = "--in";
-    public static final String OUT_FLAG     = "--out";
-    public static final String RECURSE_FLAG = "--recursive";
-    public static final String PATH_FLAG    = "--path";
-    public static final String HELP_FLAG    = "--help";
-    public static final String VERBOSE_FLAG = "--verbose";
-    public static final String DRY_RUN_FLAG = "--dry-run";
+    public  static final String IN_FLAG      = "--in";
+    public  static final String OUT_FLAG     = "--out";
+    public  static final String RECURSE_FLAG = "--recursive";
+    public  static final String PATH_FLAG    = "--path";
+    public  static final String HELP_FLAG    = "--help";
+    public  static final String VERBOSE_FLAG = "--verbose";
+    public  static final String DRY_RUN_FLAG = "--dry-run";
     public  static final String SHOW_GUI     = "--gui";
     private static final String HELP_TEXT = helpText();
 
