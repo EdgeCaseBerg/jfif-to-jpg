@@ -18,6 +18,7 @@ public class CommandLineInterface {
     public static final String newExtensionDefault = ".jpg";
     private final static Logger logger = Logger.getLogger(CommandLineInterface.class.getCanonicalName());
 
+    /* By default loggers are at info, so if we want verbose to work then this needs to change */
     private static void configureLogLevels(String[] args) {
         Optional<Level> loggerLevel = Input.getLogLevel(args);
         loggerLevel.ifPresent(logger::setLevel);
