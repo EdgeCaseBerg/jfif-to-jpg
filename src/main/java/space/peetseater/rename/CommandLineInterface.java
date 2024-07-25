@@ -49,6 +49,14 @@ public class CommandLineInterface {
             }
         });
 
+
+        boolean useGUI = Input.getGUIEnabled(args).orElse(false);
+        if(useGUI) {
+            logger.fine("Starting program in GUI mode, skipping CLI processing");
+            // TODO: GUI mode
+            return;
+        }
+
         logger.fine("Extension to change: %s".formatted(extensionToChange));
         logger.fine("Will become extension: %s".formatted(extensionToBecome));
         logger.fine("Path is %s".formatted(path));
@@ -61,7 +69,6 @@ public class CommandLineInterface {
             return;
         }
 
-        // TODO: GUI mode
         Consumer<Path> action = new UpdateExtensionAction(extensionToChange, extensionToBecome);
         boolean dryRunOn = Input.getDryRunEnabled(args).orElse(false);
         if (dryRunOn) {
