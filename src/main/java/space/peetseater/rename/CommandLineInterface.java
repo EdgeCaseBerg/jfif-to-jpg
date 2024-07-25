@@ -16,11 +16,7 @@ public class CommandLineInterface {
     private final static Logger logger = Logger.getLogger(CommandLineInterface.class.getCanonicalName());
 
     public static void main(String[] args) throws IOException, IllegalArgumentException {
-        // Help should be checked first so that we can early return
-        Optional<String> showHelp = Input.getHelp(args);
-        showHelp.ifPresent(logger::info);
-        if (showHelp.isPresent()) return;
-
+        displayHelpAndExitIfAsked(args);
         LoggingHelper.configureLogLevelsByInput(args, logger);
 
         // The only truly required input is the path itself via --help
@@ -66,4 +62,11 @@ public class CommandLineInterface {
         logger.warning(messageOnEmpty);
         System.exit(1);
     }
+
+    public static void displayHelpAndExitIfAsked(String[] args) {
+        Optional<String> showHelp = Input.getHelp(args);
+        showHelp.ifPresent(logger::info);
+        if (showHelp.isPresent()) System.exit(0);
+    }
+
 }
