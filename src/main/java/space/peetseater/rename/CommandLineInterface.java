@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -60,8 +61,12 @@ public class CommandLineInterface {
         }
 
         // TODO: GUI mode
-        // TODO: --dry-run mode?
-        UpdateExtensionAction action = new UpdateExtensionAction(extensionToChange, extensionToBecome);
+        Consumer<Path> action = new UpdateExtensionAction(extensionToChange, extensionToBecome);
+        boolean dryRunOn = Input.getDryRunEnabled(args).orElse(false);
+        if (dryRunOn) {
+            action = new DryRunAction<>(action);
+        }
+
         if (originalPath.toFile().isDirectory()) {
             logger.fine("Walking directory to change all files");
             Files.walkFileTree(originalPath, new PathVisitor(action, originalPath, recursive));
