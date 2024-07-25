@@ -34,11 +34,7 @@ public class CommandLineInterface {
         logger.fine("Sub-folders will be processed %s".formatted(recursive));
 
         Path originalPath = Paths.get(path);
-        File originalFile = originalPath.toFile();
-        if (!originalFile.exists()) {
-            logger.warning("File does not exist: %s%n".formatted(path));
-            return;
-        }
+        exitIfFileDoesNotExist(originalPath);
 
         Consumer<Path> action = new UpdateExtensionAction(extensionToChange, extensionToBecome);
         boolean dryRunOn = Input.getDryRunEnabled(args).orElse(false);
@@ -67,6 +63,14 @@ public class CommandLineInterface {
         Optional<String> showHelp = Input.getHelp(args);
         showHelp.ifPresent(logger::info);
         if (showHelp.isPresent()) System.exit(0);
+    }
+
+    public static void exitIfFileDoesNotExist(Path path) {
+        File originalFile = path.toFile();
+        if (!originalFile.exists()) {
+            logger.warning("File does not exist: %s%n".formatted(path.toAbsolutePath()));
+            System.exit(2);
+        }
     }
 
 }
