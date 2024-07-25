@@ -14,20 +14,20 @@ public class Input {
     private static final String HELP_TEXT = helpText();
 
     static Optional<String> getInExtension(String[] args) {
-        return flagFromArgs(args, IN_FLAG);
+        return flaggedValueFromArgs(args, IN_FLAG);
     }
 
     static Optional<String> getOutExtension(String[] args) {
-        return flagFromArgs(args, OUT_FLAG);
+        return flaggedValueFromArgs(args, OUT_FLAG);
     }
 
     static Optional<Boolean> getRecursive(String[] args) {
-        Optional<String> possibleValue = flagFromArgs(args, RECURSE_FLAG);
+        Optional<String> possibleValue = flaggedValueFromArgs(args, RECURSE_FLAG);
         return possibleValue.map("true"::equals);
     }
 
     static Optional<Boolean> getDryRunEnabled(String[] args) {
-        Optional<String> possibleValue = flagFromArgs(args, DRY_RUN_FLAG);
+        Optional<String> possibleValue = flaggedValueFromArgs(args, DRY_RUN_FLAG);
         return possibleValue.map("true"::equals);
     }
 
@@ -75,7 +75,7 @@ public class Input {
         }
     }
 
-    static Optional<String> flagFromArgs(String[] args, String flag) {
+    static Optional<String> flaggedValueFromArgs(String[] args, String flag) {
         for (int i = 0, a = 1; a < args.length; i++, a++) {
             boolean hasArgument = args[i].startsWith(flag);
             if (hasArgument && !args[a].startsWith("--")) {
