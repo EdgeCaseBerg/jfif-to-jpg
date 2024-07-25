@@ -7,9 +7,6 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
-import java.util.logging.Handler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CommandLineInterface {
@@ -30,12 +27,10 @@ public class CommandLineInterface {
         String  extensionToChange = Input.getInExtension(args).orElse(oldExtensionDefault);
         String  extensionToBecome = Input.getOutExtension(args).orElse(newExtensionDefault);
         boolean recursive         = Input.getRecursive(args).orElse(false);
-        String  path              = Input.getPath(args).orElseThrow(new Supplier<IllegalArgumentException>() {
-            @Override
-            public IllegalArgumentException get() {
-                return new IllegalArgumentException("No Path defined in arguments. Pass %s to view help".formatted(Input.HELP_FLAG));
-            }
-        });
+        Optional<String> maybePath= Input.getPath(args);
+        exitWithMessageIfEmpty(maybePath,  "No Path defined in arguments. Pass %s to view help".formatted(Input.HELP_FLAG));
+        assert maybePath.isPresent();
+        String  path              = maybePath.get();
 
         logger.fine("Extension to change: %s".formatted(extensionToChange));
         logger.fine("Will become extension: %s".formatted(extensionToBecome));
@@ -62,5 +57,13 @@ public class CommandLineInterface {
             logger.fine("Changing single file");
             action.accept(originalPath);
         }
+    }
+
+    public static void exitWithMessageIfEmpty(Optional<?> opt, String messageOnEmpty) {
+        if (opt.isPresent()) {
+            return;
+        }
+        logger.warning(messageOnEmpty);
+        System.exit(1);
     }
 }
