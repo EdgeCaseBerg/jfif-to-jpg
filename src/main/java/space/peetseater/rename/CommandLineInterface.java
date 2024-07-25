@@ -18,25 +18,13 @@ public class CommandLineInterface {
     public static final String newExtensionDefault = ".jpg";
     private final static Logger logger = Logger.getLogger(CommandLineInterface.class.getCanonicalName());
 
-    /* By default loggers are at info, so if we want verbose to work then this needs to change */
-    private static void configureLogLevels(String[] args) {
-        Optional<Level> loggerLevel = Input.getLogLevel(args);
-        loggerLevel.ifPresent(logger::setLevel);
-
-        Logger globalLogger = Logger.getLogger("");
-        loggerLevel.ifPresent(globalLogger::setLevel);
-        for (Handler handler : globalLogger.getHandlers()) {
-            loggerLevel.ifPresent(handler::setLevel);
-        }
-    }
-
     public static void main(String[] args) throws IOException, IllegalArgumentException {
         // Help should be checked first so that we can early return
         Optional<String> showHelp = Input.getHelp(args);
         showHelp.ifPresent(logger::info);
         if (showHelp.isPresent()) return;
 
-        configureLogLevels(args);
+        LoggingHelper.configureLogLevelsByInput(args, logger);
 
         // The only truly required input is the path itself via --help
         String  extensionToChange = Input.getInExtension(args).orElse(oldExtensionDefault);
