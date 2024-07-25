@@ -10,6 +10,7 @@ public class Input {
     public static final String PATH_FLAG    = "--path";
     public static final String HELP_FLAG    = "--help";
     public static final String VERBOSE_FLAG = "--verbose";
+    public static final String DRY_RUN_FLAG = "--dry-run";
     private static final String HELP_TEXT = helpText();
 
     static Optional<String> getInExtension(String[] args) {
@@ -22,6 +23,11 @@ public class Input {
 
     static Optional<Boolean> getRecursive(String[] args) {
         Optional<String> possibleValue = flagFromArgs(args, RECURSE_FLAG);
+        return possibleValue.map("true"::equals);
+    }
+
+    static Optional<Boolean> getDryRunEnabled(String[] args) {
+        Optional<String> possibleValue = flagFromArgs(args, DRY_RUN_FLAG);
         return possibleValue.map("true"::equals);
     }
 
