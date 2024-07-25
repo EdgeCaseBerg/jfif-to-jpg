@@ -11,6 +11,7 @@ public class Input {
     public static final String HELP_FLAG    = "--help";
     public static final String VERBOSE_FLAG = "--verbose";
     public static final String DRY_RUN_FLAG = "--dry-run";
+    public  static final String SHOW_GUI     = "--gui";
     private static final String HELP_TEXT = helpText();
 
     static Optional<String> getInExtension(String[] args) {
@@ -29,6 +30,12 @@ public class Input {
     static Optional<Boolean> getDryRunEnabled(String[] args) {
         Optional<String> possibleValue = flaggedValueFromArgs(args, DRY_RUN_FLAG);
         return possibleValue.map("true"::equals);
+    }
+
+    static Optional<Boolean> getGUIEnabled(String[] args) {
+        Optional<String> possibleValue = flaggedValueFromArgs(args, SHOW_GUI);
+        return possibleValue.map("true"::equals);
+
     }
 
     static Optional<String> getPath(String[] args) {
