@@ -119,6 +119,9 @@ public class Input {
             {OUT_FLAG, "extension the changed files will have after processing, without the dot. Defaults to jpg"},
             {RECURSE_FLAG, "whether or not all files in the given path should be modified, false by default"},
             {PATH_FLAG, "A path to a directory or single file, if directory then all files in subdirectories will be walked if the recursive flag is passed"},
+            {DRY_RUN_FLAG, "Do not actually rename the files, just list what would be changed"},
+            {VERBOSE_FLAG, "Increase logging level to FINE for application"},
+            {SHOW_GUI, "Display a window to select and rename extensions instead of immediately executing"},
             {HELP_FLAG, "display this help text"}
         };
         for (String[] direction : directions) {
