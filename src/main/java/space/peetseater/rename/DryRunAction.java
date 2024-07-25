@@ -9,18 +9,18 @@ public class DryRunAction<T> implements Consumer<T> {
     public static Logger logger = Logger.getLogger(DryRunAction.class.toString());
 
     private final Consumer<T> wrapped;
-    private final LinkedList<String> auditTrail;
+    private final LinkedList<Audit<T>> auditTrail;
 
     public DryRunAction(Consumer<T> wrapped) {
         this.wrapped = wrapped;
-        this.auditTrail = new LinkedList<String>();
+        this.auditTrail = new LinkedList<Audit<T>>();
     }
     
     public void clearAuditTrail() {
         this.auditTrail.clear();
     }
     
-    public LinkedList<String> getAuditTrail() {
+    public LinkedList<Audit<T>> getAuditTrail() {
         return this.auditTrail;
     }
 
@@ -28,6 +28,6 @@ public class DryRunAction<T> implements Consumer<T> {
     public void accept(T t) {
         String logMessage = "Would take action on %s with %s".formatted(t, wrapped);
         logger.info(logMessage);
-        this.auditTrail.add(logMessage);
+        this.auditTrail.add(new Audit<>(t, logMessage));
     }
 }
