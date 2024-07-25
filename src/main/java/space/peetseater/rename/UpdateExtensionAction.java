@@ -18,6 +18,11 @@ public class UpdateExtensionAction implements Consumer<Path> {
     }
 
     @Override
+    public String toString() {
+        return "rename %s to %s action".formatted(oldExtension, newExtension);
+    }
+
+    @Override
     public void accept(Path path) {
         if (path.getFileName().toString().endsWith(oldExtension)) {
             String[] parts = path.toAbsolutePath().toString().split(oldExtension);
