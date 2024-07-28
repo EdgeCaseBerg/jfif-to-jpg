@@ -7,7 +7,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.function.Consumer;
 
-class PathVisitor extends SimpleFileVisitor<Path> {
+public class PathVisitor extends SimpleFileVisitor<Path> {
     private final Path startPath;
     private final boolean isRecursive;
     private final Consumer<Path> consumer;
