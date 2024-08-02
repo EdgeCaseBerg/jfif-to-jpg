@@ -28,7 +28,7 @@ public class UpdateExtensionAction implements Consumer<Path> {
     }
 
     public Optional<String> getNewPath(Path path) {
-        if (path.getFileName().toString().endsWith(oldExtension)) {
+        if (shouldTakeAction(path)) {
             String stringPath = path.toAbsolutePath().toString();
             String pathless = stringPath.substring(0, stringPath.length() - oldExtension.length());
             return Optional.of(pathless + newExtension);
