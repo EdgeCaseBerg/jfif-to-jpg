@@ -4,14 +4,14 @@ import java.util.LinkedList;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-public class DryRunAction<T> implements Consumer<T> {
+public class DryRunAction<T> implements ConditionalConsumer<T> {
 
     public static Logger logger = Logger.getLogger(DryRunAction.class.toString());
 
-    private final Consumer<T> wrapped;
+    private final ConditionalConsumer<T> wrapped;
     private final LinkedList<Audit<T>> auditTrail;
 
-    public DryRunAction(Consumer<T> wrapped) {
+    public DryRunAction(ConditionalConsumer<T> wrapped) {
         this.wrapped = wrapped;
         this.auditTrail = new LinkedList<Audit<T>>();
     }
@@ -26,8 +26,14 @@ public class DryRunAction<T> implements Consumer<T> {
 
     @Override
     public void accept(T t) {
-        String logMessage = "Would take action on %s with %s".formatted(t, wrapped);
+        String wouldOrWouldNot = wrapped.shouldTakeAction(t) ? "" : "not ";
+        String logMessage = "Would %stake action on %s with %s".formatted(wouldOrWouldNot, t, wrapped);
         logger.info(logMessage);
         this.auditTrail.add(new Audit<>(t, logMessage));
+    }
+
+    @Override
+    public boolean shouldTakeAction(T t) {
+        return wrapped.shouldTakeAction(t);
     }
 }

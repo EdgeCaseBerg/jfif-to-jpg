@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 public class CommandLineInterface {
@@ -36,7 +35,7 @@ public class CommandLineInterface {
         Path originalPath = Paths.get(path);
         exitIfFileDoesNotExist(originalPath);
 
-        Consumer<Path> action = new UpdateExtensionAction(extensionToChange, extensionToBecome);
+        ConditionalConsumer<Path> action = new UpdateExtensionAction(extensionToChange, extensionToBecome);
         boolean dryRunOn = Input.getDryRunEnabled(args).orElse(false);
         if (dryRunOn) {
             action = new DryRunAction<>(action);
