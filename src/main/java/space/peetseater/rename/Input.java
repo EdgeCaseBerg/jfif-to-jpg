@@ -14,20 +14,20 @@ public class Input {
     public  static final String SHOW_GUI     = "--gui";
     private static final String HELP_TEXT = helpText();
 
-    static Optional<String> getInExtension(String[] args) {
+    public static Optional<String> getInExtension(String[] args) {
         return flaggedValueFromArgs(args, IN_FLAG);
     }
 
-    static Optional<String> getOutExtension(String[] args) {
+    public static Optional<String> getOutExtension(String[] args) {
         return flaggedValueFromArgs(args, OUT_FLAG);
     }
 
-    static Optional<Boolean> getRecursive(String[] args) {
+    public static Optional<Boolean> getRecursive(String[] args) {
         Optional<String> possibleValue = flaggedValueFromArgs(args, RECURSE_FLAG);
         return possibleValue.map("true"::equals);
     }
 
-    static Optional<Boolean> getDryRunEnabled(String[] args) {
+    public static Optional<Boolean> getDryRunEnabled(String[] args) {
         Optional<String> possibleValue = flaggedValueFromArgs(args, DRY_RUN_FLAG);
         return possibleValue.map("true"::equals);
     }
@@ -35,10 +35,9 @@ public class Input {
     static Optional<Boolean> getGUIEnabled(String[] args) {
         Optional<String> possibleValue = flaggedValueFromArgs(args, SHOW_GUI);
         return possibleValue.map("true"::equals);
-
     }
 
-    static Optional<String> getPath(String[] args) {
+    public static Optional<String> getPath(String[] args) {
         int pathStart = 0;
         int pathEnd = 0;
 
