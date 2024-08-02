@@ -72,7 +72,7 @@ public class BackgroundFileExtensionWorker extends SwingWorker<HashSet<String>, 
             }
             if (!extBuilder.isEmpty() && foundDot) {
                 HashSet<String> newValues = new HashSet<>(1);
-                newValues.add(extBuilder.toString());
+                newValues.add(extBuilder.reverse().toString());
                 publish(new PartialResult(1, newValues));
             } else {
                 publish(new PartialResult(1, new HashSet<>()));
