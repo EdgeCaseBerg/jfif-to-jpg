@@ -1,4 +1,4 @@
-package space.peetseater.rename.gui;
+package space.peetseater.rename.gui.workers;
 
 import space.peetseater.rename.PathVisitor;
 
@@ -11,14 +11,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class BackgroundFileExtensionWorker extends SwingWorker<HashSet<String>, BackgroundFileExtensionWorker.PartialResult> {
+public class InputExtensionsListWorker extends SwingWorker<HashSet<String>, InputExtensionsListWorker.PartialResult> {
 
     private final Path searchStart;
     private final HashSet<String> extension;
     private int totalFilesChecked;
     public static final String PROGRESS_PROPERTY_NAME = "progress";
 
-    public BackgroundFileExtensionWorker(Path searchStart) {
+    public InputExtensionsListWorker(Path searchStart) {
         this.searchStart = searchStart;
         this.extension = new HashSet<>();
         this.totalFilesChecked = 0;
@@ -77,13 +77,6 @@ public class BackgroundFileExtensionWorker extends SwingWorker<HashSet<String>, 
             } else {
                 publish(new PartialResult(1, new HashSet<>()));
             }
-
-            // Spin lock for testing purposes, remove later
-//            Date now = new Date();
-//            Date later = new Date(now.getTime() + 20);
-//            while (now.before(later)) {
-//                now = new Date();
-//            }
         }
     }
 }
