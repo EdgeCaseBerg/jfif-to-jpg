@@ -1,9 +1,7 @@
 package space.peetseater.rename;
 
 import java.util.Optional;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 public class LoggingHelper {
     /* By default loggers are at info, so if we want verbose to work then this needs to change */
@@ -15,6 +13,14 @@ public class LoggingHelper {
         loggerLevel.ifPresent(globalLogger::setLevel);
         for (Handler handler : globalLogger.getHandlers()) {
             loggerLevel.ifPresent(handler::setLevel);
+            handler.setFormatter(new JustTheMessageFormatter());
+        }
+    }
+
+    static class JustTheMessageFormatter extends Formatter {
+        @Override
+        public String format(LogRecord record) {
+            return record.getMessage();
         }
     }
 }
