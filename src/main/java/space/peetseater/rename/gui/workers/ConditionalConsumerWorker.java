@@ -17,6 +17,7 @@ public abstract class ConditionalConsumerWorker extends SwingWorker<Integer, Str
     protected final Path start;
     protected final boolean isRecursive;
     protected final ConditionalConsumer<Path> action;
+    private final int numberOfFilesToCheck;
     protected int operated = 0;
     protected HashSet<WorkerListener<String>> listeners;
     protected final RenameOptionsBuilder optionsBuilder;
@@ -33,6 +34,7 @@ public abstract class ConditionalConsumerWorker extends SwingWorker<Integer, Str
         isRecursive = optionsBuilder.isRecusive();
         listeners = new HashSet<WorkerListener<String>>();
         action = getAction();
+        this.numberOfFilesToCheck = totalFilesToCheck;
     }
 
     abstract public ConditionalConsumer<Path> getAction();
@@ -57,6 +59,9 @@ public abstract class ConditionalConsumerWorker extends SwingWorker<Integer, Str
                 action.accept(path);
                 operated++;
                 publish(action.getAudit(path).msg());
+                if (numberOfFilesToCheck != 0) {
+                    setProgress((int) Math.min(100, (100.0 * operated / numberOfFilesToCheck)));
+                }
             }
         };
         PathVisitor pv = new PathVisitor(reportingConsumer, start, isRecursive);
