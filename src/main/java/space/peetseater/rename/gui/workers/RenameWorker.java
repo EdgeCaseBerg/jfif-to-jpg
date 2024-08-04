@@ -7,8 +7,13 @@ import space.peetseater.rename.gui.RenameOptionsBuilder;
 import java.nio.file.Path;
 
 public class RenameWorker extends ConditionalConsumerWorker {
-    public RenameWorker(RenameOptionsBuilder optionsBuilder) {
-        super(optionsBuilder);
+    @Override
+    public String getWorkerName() {
+        return "Renaming Worker";
+    }
+
+    public RenameWorker(RenameOptionsBuilder optionsBuilder, int numberOfFilesToProcess) {
+        super(optionsBuilder, numberOfFilesToProcess);
     }
 
     @Override

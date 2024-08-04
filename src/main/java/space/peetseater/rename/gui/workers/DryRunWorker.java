@@ -12,6 +12,15 @@ public class DryRunWorker extends ConditionalConsumerWorker {
     }
 
     @Override
+    public String getWorkerName() {
+        return "Dry Run Worker";
+    }
+
+    public DryRunWorker(RenameOptionsBuilder optionsBuilder, int numberFilesToProcess) {
+        super(optionsBuilder, numberFilesToProcess);
+    }
+
+    @Override
     public ConditionalConsumer<Path> getAction() {
         String inExt = optionsBuilder.getInputExtension();
         String outExt = optionsBuilder.getOutputExtension();
