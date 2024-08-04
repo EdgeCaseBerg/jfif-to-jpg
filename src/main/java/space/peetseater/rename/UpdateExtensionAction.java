@@ -8,7 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class UpdateExtensionAction implements Consumer<Path>, ConditionalConsumer<Path> {
+public class UpdateExtensionAction implements ConditionalConsumer<Path> {
 
     private final String newExtension;
     private final String oldExtension;
