@@ -37,6 +37,10 @@ public abstract class ConditionalConsumerWorker extends SwingWorker<Integer, Str
         this.numberOfFilesToCheck = totalFilesToCheck;
     }
 
+    public boolean canExecute() {
+        return this.optionsBuilder.canRun();
+    }
+
     abstract public ConditionalConsumer<Path> getAction();
 
     public void addListener(WorkerListener<String> workerListener) {
