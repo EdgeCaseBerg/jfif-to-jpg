@@ -21,7 +21,12 @@ public abstract class ConditionalConsumerWorker extends SwingWorker<Integer, Str
     protected final RenameOptionsBuilder optionsBuilder;
 
     public ConditionalConsumerWorker(RenameOptionsBuilder optionsBuilder) {
+        this(optionsBuilder, 0);
+    }
+
     public abstract String getWorkerName();
+
+    public ConditionalConsumerWorker(RenameOptionsBuilder optionsBuilder, int totalFilesToCheck) {
         this.optionsBuilder = optionsBuilder;
         start = Paths.get(optionsBuilder.getStartPath());
         isRecursive = optionsBuilder.isRecusive();

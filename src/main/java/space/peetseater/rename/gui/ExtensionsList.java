@@ -106,5 +106,8 @@ public class ExtensionsList implements PropertyChangeListener {
         }
     }
 
+    public int getFilesSeen() {
+        return filesSeen;
+    }
 
 }
