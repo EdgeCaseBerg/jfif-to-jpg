@@ -1,7 +1,4 @@
-package space.peetseater.rename.gui;
-
-import space.peetseater.rename.gui.workers.ConditionalConsumerWorker;
-import space.peetseater.rename.gui.workers.WorkerListener;
+package space.peetseater.rename.gui.workers;
 
 import javax.swing.*;
 import java.awt.*;
