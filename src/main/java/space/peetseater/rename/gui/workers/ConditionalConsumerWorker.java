@@ -4,6 +4,7 @@ import space.peetseater.rename.*;
 import space.peetseater.rename.gui.RenameOptionsBuilder;
 
 import javax.swing.*;
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -59,7 +60,8 @@ public abstract class ConditionalConsumerWorker extends SwingWorker<Integer, Str
             }
         };
         PathVisitor pv = new PathVisitor(reportingConsumer, start, isRecursive);
-        Files.walkFileTree(start, pv);
+        HashSet<FileVisitOption> optionsNoSymbolicLinks = new HashSet<>();
+        Files.walkFileTree(start, optionsNoSymbolicLinks, 64, pv);
         return operated;
     }
 }
