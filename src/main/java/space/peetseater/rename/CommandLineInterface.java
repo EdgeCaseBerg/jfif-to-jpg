@@ -14,7 +14,7 @@ public class CommandLineInterface {
     public static final String newExtensionDefault = ".jpg";
     private final static Logger logger = Logger.getLogger(CommandLineInterface.class.getCanonicalName());
 
-    public static void main(String[] args) throws IOException, IllegalArgumentException {
+    public static void run(String[] args) throws IOException, IllegalArgumentException {
         displayHelpAndExitIfAsked(args);
         LoggingHelper.configureLogLevelsByInput(args, logger);
 
